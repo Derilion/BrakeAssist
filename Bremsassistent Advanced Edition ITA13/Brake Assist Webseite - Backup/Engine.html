@@ -1,0 +1,153 @@
+<!--
+
+Author:  		Maximilian Bier
+
+Date:    		12/22/2015
+
+Version: 		0.1
+
+Description:	Main HTML File
+
+-->
+
+<!DOCTYPE html>
+<html lang="de-DE">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width" />
+		<meta http-equiv="Cache-control" content="no-cache">
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="Stylesheet.css">
+		<link rel="shortcut icon" href="Images/break-512.png" type="image/x-icon" />
+		<title>Concept EBS</title>
+		<script src="Chart.js/Chart.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1>Concept of an Emergency Brake System</h1>
+		<br>
+		<br>
+		<div>
+			<form onsubmit="return false" oninput="calculate();">
+				
+				<table>
+					<thead>
+						<td>Start Variable</td>
+						<td>Value</td>
+						<td><select name="selector" id = "selector" size="1">
+							<option value=1 selected>m/s</option>
+							<option value=3.6>km/h</option>
+							</select>
+						</td>
+					</thead>
+					<tr>
+						<td>Own Velocity:</td>
+						<td><input type="number" min="0" step="0.1" name="v_own" id="v_own" value="0"></input></td>
+						<td><p id="msm_unit_1">m/s</p></output></td>
+					</tr>
+					<tr>
+						<td>Velocity of a Car Ahead:</td>
+						<td><input type="number" min="0" step="0.1" name="v_ahead" id="v_ahead" value="0"></input></td>
+						<td><p id="msm_unit_2">m/s</p></output></td>
+					</tr>
+					<tr>
+						<td>Acceleration of a Car Ahead:</td>
+						<td><input type="number" min="-5" step="0.1" name="a_ahead" id="a_ahead" value="0"></input></td>
+						<td><p id="msm_unit_3">m/s²</p></output></td>
+					</tr>
+					<tr>
+						<td>Detection Range:</td>
+						<td><input type="number" min="0" name="range" id="range" value="0"></input></td>
+						<td>m</td>
+					</tr>
+					<tr>
+						<td>Mode Selector</td>
+						<td><select name="selector" id = "mode" size="1">
+							<option value=1 selected>Brake until velocity is adapted</option>
+							<option value=2>Brake until velocity is 0</option>
+							</select>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				Status: <output id="answer" value="0">Please enter values to start the simulation</output>
+				<br>
+				<br>
+			</form>
+			<div id="represantationTable" class="representer">
+				<table>
+					<tr>
+						<td></td>
+						<td>Start</td>
+						<td>Distance</td>
+						<td>Speed</td>
+					</tr>
+					<tr id="collision">
+						<td>Collision:</td>
+						<td><p id="collision_time">s</p></output></td>
+						<td>0 m</td>
+						<td><p id="collision_speed">m/s</p></output></td>
+					</tr>
+					<tr>
+						<td>Visual Warning:</td>
+						<td><p id="warning_time">0s</p></output></td>
+						<td><p id="warning_dist">m</p></output></td>
+						<td><p id="warning_speed">0m/s</p></output></td>
+					</tr>
+					<tr>
+						<td>Haptic Warning:</td>
+						<td><p id="haptic_time">0s</p></output></td>
+						<td><p id="haptic_dist">m</p></output></td>
+						<td><p id="haptic_speed">0m/s</p></output></td>
+					</tr>
+					<tr>
+						<td>Emergency Braking:</td>
+						<td><p id="emergency_time">0s</p></output></td>
+						<td><p id="emergency_dist">m</p></output></td>
+						<td><p id="emergency_speed">0m/s</p></output></td>
+					</tr>
+					<tr id="stop">
+						<td>End of Braking:</td>
+						<td><p id="stop_time">0s</p></output></td>
+						<td><p id="stop_dist">m</p></output></td>
+						<td><p id="stop_speed">0m/s</p></output></td>
+					</tr>
+				</table>
+				<br>
+				<br>
+			</div>
+			<div id="representer1" class="representer">
+				<div id="dt" >Distance / Time Diagram </div>
+				<canvas id="st_diag" width="600" height="300"></canvas>
+				<br>
+				<br>
+				<div id="vt" >Velocity / Time Diagram </div>
+				<canvas id="vt_diag" width="600" height="300"></canvas>
+			</div>	
+		</div>
+		<div class='impressum'>
+			<br>
+			<br>
+				All contents written for the 'Fahrerinformationssysteme' audition of the corporate university Stuttgart
+				<br>
+				Diagrams written under usage of the <a href='http://www.chartjs.org/'>chart.js</a> library
+				<br>
+				Author: Maximilian Bier   <b>Concept of an Emergency Break System</b>   Date: 29.01.2016
+			</div>
+		<script type="text/javascript" src="calculation.js" >
+		</script>
+		<script> 
+		$(document).ready(function(){
+			$("#dt").click(function(){
+				$("#st_diag").slideToggle("slow");
+			});
+			$("#vt").click(function(){
+				$("#vt_diag").slideToggle("slow");
+			});
+		});
+</script>
+	</body>
+</html>
+
+

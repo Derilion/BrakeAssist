@@ -287,6 +287,27 @@ function calc_t_nothing_Acceleration_haptic(s_range_m, v_own, v_ahead, a_ahead_m
 	return t_nothing_s;	
 }
 
+function calc_t_nothing(t_crash_s, s_braking, v_own){
+/*
+	description:	calculates the time until the braking sequence is triggered.
+*/
+
+	//calculate the trigger moment for the braking sequence
+	var t_nothing_s = s_braking/ v_own;
+
+	//check if the safety puffer can be maintained
+	if(t_crash_s[1]>=t_nothing_s){
+		t_nothing_s = t_crash_s[1]-t_nothing_s;
+	}
+	else if(t_crash_s[0]>=t_nothing_s){
+		t_nothing_s = t_crash_s[0]-t_nothing_s;
+	}
+	else{
+		t_nothing_s = 0;
+	}
+	return t_nothing_s;
+}
+
 function calcBrakeNecc(v_own, v_ahead, a_ahead, s_range_m){
 /*
 	description:	returns if the cars would crash and when
@@ -311,6 +332,31 @@ function calcBrakeNecc(v_own, v_ahead, a_ahead, s_range_m){
 	}
 }
 					
+function calculate_t_braking(v_own){
+/*
+	description:	returns if the cars would crash and when
+*/
+	
+	var t_braking_s = 0;
+	var t_haptic_s = 0;
+				
+	//formula for breaking time until velocity = 0m/s
+				
+	t_braking_s = -(a_haptic_ms - v_own)/a_eb_ms //(a_haptic_ms * t_consthaptic_s - v_own)/(-a_eb_ms);
+				
+	//in case no emergency breaking is needed (speed already reduced to 0m/s)
+				
+	if(t_braking_s<0){	
+		t_braking_s = 0;
+		t_haptic_s = v_own/a_haptic_ms;
+	}
+	else{
+		t_haptic_s = t_consthaptic_s;
+	}
+				
+	return [t_braking_s, t_haptic_s];				
+}
+
 function getSpeed(v_own, t_now_s, t_nothing_s, t_haptic_s, t_braking_s){
 /*
 	description:	is able to calculate the speed of the braking car at any moment *t_now* given
