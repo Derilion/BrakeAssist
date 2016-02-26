@@ -8,7 +8,7 @@ const a_haptic_ms = 3; 				//haptic warning velocity
 const a_eb_ms = 5.5; 				//emergency braking velocity
 const t_consthaptic_s = 1;			//haptic warning time
 const t_warning_s = 1;				//visual warning time
-const s_puffer_m = 1;				//puffer distance
+const s_puffer_m = 2;				//puffer distance
 var diagram1;						//global reference for diagram 1
 var diagram2;						//global reference for diagram 2
 var init = true;
